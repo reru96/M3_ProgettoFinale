@@ -4,27 +4,37 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    [SerializeField]
-    private float speed;
-    private Vector2 direction;
-
-    public Vector2 Direction => direction;
+    [SerializeField] float speed;
+    private Rigidbody2D _rb;
+    private float x;
+    private float y;
+    private Vector2 dir;
+    public Vector2 Direction => dir; 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-       
+        _rb = GetComponent<Rigidbody2D>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
-
-        direction = new Vector2(h, v).normalized;
-        Vector2 newPosition = rb.position + Direction * (speed * Time.deltaTime);
-        rb.MovePosition( newPosition);
     }
+
+    private void Movement()
+    {
+      
+    }
+
+    private void FixedUpdate()
+    {
+     
+        x = Input.GetAxisRaw("Horizontal");
+        y = Input.GetAxisRaw("Vertical");
+        dir = new Vector2(x, y).normalized;
+       Vector2 newPosition = _rb.position + dir * speed * Time.fixedDeltaTime;
+        _rb.MovePosition(newPosition);
+    }
+
+ 
 }
 
 

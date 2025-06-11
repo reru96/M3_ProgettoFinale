@@ -9,33 +9,42 @@ public class PlayerAnimation : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] private Animator anim;
     private PlayerController player;
-    private Rigidbody2D rb;
+    private bool isTurning;
+    private bool isMoving;
+    public AudioSource sfx;
     void Start()
     {
+        sfx = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         player = GetComponent<PlayerController>();
-        rb = GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-        Animate();
+        if (player != null)
+        {
+            Animate();
+            
+        }
     }
 
+    private void PlaySound()
+    {
+            sfx.pitch = UnityEngine.Random.Range(0.5f, 1f);
+            sfx.Play();
+    }
     private void Animate()
     {
-        bool isTurning = player.Direction.magnitude != 0;
-        bool isMoving = player.Direction.magnitude > 0.1f;
-        anim.SetBool("isMoving", isMoving);
-
-        if (isMoving)
+        if (player.Direction.magnitude != 0)
         {
-            anim.SetFloat("x", player.Direction.x);
-            anim.SetFloat("y", player.Direction.y);
+            isTurning = true;
         }
-
+        else
+        {
+            isTurning = false;
+        }
 
         if (isTurning)
         {
@@ -43,6 +52,24 @@ public class PlayerAnimation : MonoBehaviour
             anim.SetFloat("y", player.Direction.y);
         }
 
-      
+        if (player.Direction.magnitude > 0.1f)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+        if (isMoving)
+        {
+
+            anim.SetFloat("x", player.Direction.x);
+            anim.SetFloat("y", player.Direction.y);
+
+        }
+
+        anim.SetBool("isMoving", isMoving);
     }
+
 }

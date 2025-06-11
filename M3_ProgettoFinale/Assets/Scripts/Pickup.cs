@@ -4,54 +4,54 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    [Header("Configurazione Arma")]
-    [SerializeField] private GameObject weaponPrefab;  
-    [SerializeField] private Transform weaponParent;   
-    [SerializeField] private float destroyDelay = 0.5f; 
+    [Header("Arma da equipaggiare")]
+    [SerializeField] private GameObject weaponPrefab;
+
+    [Header("Dove attaccare l'arma nel player")]
+    [SerializeField] private string weaponHolderName = "WeaponSlot";
+
+    [Header("Audio di raccolta")]
     [SerializeField] private AudioClip pickupSound;
+
+    [Header("Delay prima della distruzione")]
+    [SerializeField] private float destroyDelay = 0.1f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            EquipWeapon(other.transform);
-            PlayPickupSound();
-            Destroy(gameObject, destroyDelay);
-        }
+        if (!other.CompareTag("Player")) return;
+
+        Transform weaponParent = FindWeaponHolder(other.transform);
+        if (weaponParent == null) return;
+        EquipWeapon(weaponParent);
+        PlayPickupSound();
+        Destroy(gameObject, destroyDelay);
     }
 
-    private void EquipWeapon(Transform player)
+    private Transform FindWeaponHolder(Transform player)
+    {
+        Transform holder = player.Find(weaponHolderName);
+        return holder != null ? holder : player;
+    }
+
+
+
+    private void EquipWeapon(Transform weaponParent)
     {
         if (weaponPrefab == null) return;
 
-      
-        if (weaponParent == null)
-        {
-            weaponParent = player.Find("Player") ?? player; 
-        }
-
-      
-        foreach (Transform child in weaponParent)
-        {
-            if (child.CompareTag("Weapon"))
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        
         GameObject newWeapon = Instantiate(weaponPrefab, weaponParent);
-        newWeapon.transform.localPosition = Vector3.zero;
+        newWeapon.transform.localPosition = Vector2.zero;
         newWeapon.transform.localRotation = Quaternion.identity;
-        newWeapon.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        newWeapon.transform.localScale = Vector2.one * 0.2f;
     }
 
     private void PlayPickupSound()
     {
-
         if (pickupSound != null)
         {
             AudioSource.PlayClipAtPoint(pickupSound, transform.position);
         }
     }
+
+
 }

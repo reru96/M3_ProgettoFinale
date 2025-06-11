@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7685412654290878996}
   - component: {fileID: 7546112595036576581}
   - component: {fileID: 1160171648971393087}
-  - component: {fileID: 1194791790959782723}
+  - component: {fileID: 7169781833738249944}
   m_Layer: 0
   m_Name: Treasure
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.3360915, y: -8.482986, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.12914161, y: 0.12914161, z: 0.12914161}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 540466048, guid: 9bdb0bd5e4ddb9c46a61c49e81a96279, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10.375, y: 11.6875}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -123,8 +123,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 10.375, y: 11.6875}
+    newSize: {x: 10.375, y: 11.6875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &1194791790959782723
+--- !u!114 &7169781833738249944
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,11 +168,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2390052638910916622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 262b4be294a5d474ea0680377bf4a657, type: 3}
+  m_Script: {fileID: 11500000, guid: 22955f4e522bca844bfc8dfe6bc6f3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 5885365934178146433, guid: 46321bc67f1f49b45976f9e32db6bf4b, type: 3}
-  weaponParent: {fileID: 0}
-  destroyDelay: 0.5
-  pickupEffect: {fileID: 0}
-  pickupSound: {fileID: 8300000, guid: 2741c743856543144b3794e2c64e806d, type: 3}
+  weaponDropPrefab: {fileID: 5885365934178146433, guid: 46321bc67f1f49b45976f9e32db6bf4b, type: 3}
+  dropOffset: {x: 0, y: 0, z: 0}

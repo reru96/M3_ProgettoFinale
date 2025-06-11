@@ -3,7 +3,9 @@ guid: 262b4be294a5d474ea0680377bf4a657
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - weaponPrefab: {fileID: 5885365934178146433, guid: 46321bc67f1f49b45976f9e32db6bf4b, type: 3}
+  - pickupSound: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
