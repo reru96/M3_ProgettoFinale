@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7685412654290878996}
   - component: {fileID: 7546112595036576581}
   - component: {fileID: 1160171648971393087}
-  - component: {fileID: 7169781833738249944}
+  - component: {fileID: 2409509867524715627}
   m_Layer: 0
   m_Name: Treasure
   m_TagString: Untagged
@@ -116,7 +116,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -159,7 +159,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &7169781833738249944
+--- !u!114 &2409509867524715627
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -168,8 +168,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2390052638910916622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22955f4e522bca844bfc8dfe6bc6f3a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 55394bb975457534e9471697538445f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponDropPrefab: {fileID: 5885365934178146433, guid: 46321bc67f1f49b45976f9e32db6bf4b, type: 3}
-  dropOffset: {x: 0, y: 0, z: 0}
+  weaponPrefab: {fileID: 0}
+  weaponHolderName: WeaponSlot
+  pickupSound: {fileID: 0}
+  destroyDelay: 0.1
