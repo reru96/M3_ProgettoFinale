@@ -9,9 +9,10 @@ public class EnemyBullet : MonoBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private Animation animClip;
 
+
     public int lifetime = 2;
     public AudioClip hitSound;
-
+    public AudioClip ThrowSound;
 
     public int Damage => damage;
     public float Speed
@@ -29,15 +30,17 @@ public class EnemyBullet : MonoBehaviour
 
     void Start()
     {
+
         _rb = GetComponent<Rigidbody2D>();
-        animClip = GetComponent<Animation>();
+        AudioController.Play(ThrowSound, transform.position, 0.10f);
         Destroy(gameObject, lifetime);
     }
 
     private void Update()
     {
-        animClip.Play();
+
     }
+
     private void FixedUpdate()
     {
         _rb.velocity = dir * speed;
@@ -46,8 +49,16 @@ public class EnemyBullet : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            PlayerController player = collision.collider.GetComponent<PlayerController>();
-            AudioController.Play(hitSound, transform.position, 1);
+
+            LifeController life = collision.collider.GetComponent<LifeController>();
+            AudioController.Play(hitSound, transform.position, 0.10f);
+            life.AddHp(-damage);
+            Destroy(gameObject);
+        }
+
+        if (!collision.collider.CompareTag("Player"))
+        {
+            AudioController.Play(hitSound, transform.position, 0.10f);
             Destroy(gameObject);
         }
     }

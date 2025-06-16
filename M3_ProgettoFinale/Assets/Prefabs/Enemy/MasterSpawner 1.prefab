@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 8685435205335712881}
   - component: {fileID: 9002785724959977218}
   - component: {fileID: 4318591799424038364}
+  - component: {fileID: 5623201671952341369}
   m_Layer: 6
   m_Name: MasterSpawner 1
   m_TagString: Enemy
@@ -140,8 +141,10 @@ MonoBehaviour:
   - {fileID: 7205561816665510086}
   enemyPrefab:
   - {fileID: 5028291640935841440, guid: 30470a8bcb8d19b4db8afd3a0d4807d3, type: 3}
-  spawnInterval: 2
-  spawnSound: {fileID: 0}
+  - {fileID: 5028291640935841440, guid: 1a818ad83bd4ada46862d06eb4b88b52, type: 3}
+  spawnInterval: 3
+  spawnSound: {fileID: 8300000, guid: f8bf4f3835e3f6249b4e1105e620d5f4, type: 3}
+  maxEnemies: 20
 --- !u!114 &4589389630849708653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onDeath: 2
   maxHP: 10
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 9e986cab7cabdfc4cb292b0e8ea3cd5e, type: 3}
   healthBar: {fileID: 0}
 --- !u!114 &8685435205335712881
 MonoBehaviour:
@@ -170,14 +173,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221cf01babbfc2544aaa6da8d06b0412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 3
+  attackRange: 10
   damage: 1
-  attackCooldown: 1
+  attackCooldown: 0.8
   bullet: {fileID: 2774756442305198549, guid: 36e719d7498e9384a9d98c0ace029076, type: 3}
   firePoint: {fileID: 8118470940425910994}
-  player: {fileID: 0}
-  lastAttackTime: 1
+  hitSound: {fileID: 8300000, guid: bb33842dd6203aa4a8cee5d14a2d322c, type: 3}
+  player: {fileID: 8949292402931454742, guid: 33339e0851fd9424fa744dc6fe1299c8, type: 3}
+  lastAttackTime: 0.8
   anim: {fileID: 9002785724959977218}
+  attack: 0
 --- !u!95 &9002785724959977218
 Animator:
   serializedVersion: 5
@@ -282,6 +287,33 @@ PolygonCollider2D:
       - {x: 2.625, y: -4.21875}
       - {x: 2.3125, y: -3.28125}
   m_UseDelaunayMesh: 0
+--- !u!50 &5623201671952341369
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5822522762144558979}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1001 &1535583529206018039
 PrefabInstance:
   m_ObjectHideFlags: 0

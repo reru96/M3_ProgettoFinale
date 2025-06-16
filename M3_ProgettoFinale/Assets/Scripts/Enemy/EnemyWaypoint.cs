@@ -1,60 +1,81 @@
+
+
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyWaypoint : MonoBehaviour
 {
-
-    public float movespeed = 5f;
-    public float waitTime = 2f;
+  
+    public float moveSpeed = 3f;
+    public float waitTime = 1.5f;
     public bool loopWaypoints = true;
-    public float detectionRange = 3f;
-    public int MaxWaypoint = 100;
-    public AudioClip hitSound;
-    public int damage = 1;
 
-    private Transform waypointParent;
+ 
+    public float detectionRange = 4f;
+    public int damageToPlayer = 1;
+
+    
+    public int maxWaypoints = 100;
+
+    public AudioClip hitSound;
+
     private Transform[] waypoints;
-    private int currentWaypointIndex;
-    private bool isWaiting;
+    private int currentWaypointIndex = 0;
+    private bool isWaiting = false;
+
+    public Transform waypointParent;
     private Transform player;
-    private LifeController life;
+    private LifeController enemyLife;
+
 
     void Start()
     {
+       
+        enemyLife = GetComponent<LifeController>();
 
-        life = GetComponent<LifeController>();
-        GameObject waypointObject = GameObject.FindWithTag("Waypoint");
-        if (waypointObject != null)
+        
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
         {
-            waypointParent = waypointObject.transform;
+            player = playerObj.transform;
+        }
+        else
+        {
+            Debug.LogError($"{name}: Nessun oggetto con tag 'Player' trovato.");
+            enabled = false;
+            return;
         }
 
-        GameObject playerObject = GameObject.FindWithTag("Player");
-        if (playerObject != null)
+      
+        if (waypointParent == null)
         {
-            player = playerObject.transform;
+            Debug.LogError($"{name}: waypointParent non assegnato. Assegnalo nel campo Inspector.");
+            enabled = false;
+            return;
         }
-        waypoints = new Transform[waypointParent.childCount];
-        for (int i = 0; i < waypointParent.childCount; i++)
+
+        
+        int count = Mathf.Min(waypointParent.childCount, maxWaypoints);
+        waypoints = new Transform[count];
+        for (int i = 0; i < count; i++)
         {
             waypoints[i] = waypointParent.GetChild(i);
         }
 
+        if (waypoints.Length == 0)
+        {
+            Debug.LogError($"{name}: Nessun waypoint trovato nel genitore.");
+            enabled = false;
+        }
     }
 
-    // Update is called once per frame
+
     void Update()
     {
+        if (waypoints == null || player == null || isWaiting) return;
 
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
-        if (isWaiting)
-        {
-            return;
-        }
-
-        if (distanceToPlayer <= detectionRange)
+        float distToPlayer = Vector2.Distance(transform.position, player.position);
+        if (distToPlayer <= detectionRange)
         {
             ChasePlayer();
         }
@@ -62,13 +83,12 @@ public class EnemyWaypoint : MonoBehaviour
         {
             MoveToWaypoint();
         }
-
     }
 
     void MoveToWaypoint()
     {
         Transform target = waypoints[currentWaypointIndex];
-        transform.position = Vector2.MoveTowards(transform.position, target.position, movespeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, target.position) < 0.1f)
         {
@@ -85,28 +105,26 @@ public class EnemyWaypoint : MonoBehaviour
 
         if (currentWaypointIndex >= waypoints.Length)
         {
-            if (loopWaypoints)
-            {
-                currentWaypointIndex = 0;
-            }
-            else
-            {
-                currentWaypointIndex = waypoints.Length - 1;
-            }
+            currentWaypointIndex = loopWaypoints ? 0 : waypoints.Length - 1;
         }
 
         isWaiting = false;
     }
 
-   
+    void ChasePlayer()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        LifeController player = GetComponent<LifeController>();
         if (collision.collider.CompareTag("Player"))
         {
-
-            
-            player.AddHp(-damage);
+            LifeController playerLife = collision.collider.GetComponent<LifeController>();
+            if (playerLife != null)
+            {
+                playerLife.AddHp(-damageToPlayer);
+            }
         }
 
         if (collision.collider.CompareTag("Bullet"))
@@ -114,23 +132,12 @@ public class EnemyWaypoint : MonoBehaviour
             Bullet bullet = collision.collider.GetComponent<Bullet>();
             if (bullet != null)
             {
-                //audioSource.pitch = UnityEngine.Random.Range(0.1f, 1.1f);
-                //audioSource.Play();
-                
-                AudioController.Play(hitSound, transform.position, 1);
-                life.AddHp(-bullet.Damage);
+                if (hitSound != null)
+                    AudioSource.PlayClipAtPoint(hitSound, transform.position);
+                enemyLife.AddHp(-bullet.Damage);
             }
         }
     }
-
-    void ChasePlayer()
-    {
-
-        transform.position = Vector2.MoveTowards(transform.position, player.position, movespeed * Time.deltaTime);
-
-    }
-
 }
-
 
 

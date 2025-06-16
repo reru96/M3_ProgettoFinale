@@ -16,13 +16,19 @@ public class EnemySpawner : MonoBehaviour
     [Header("Audio di spawn")]
     public AudioClip spawnSound;
 
+    [Header("Numero di nemici massimi")]
+    public int maxEnemies;
+
     private float timer = 0f;
+    
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
+
 
     void Update()
     {
         timer += Time.deltaTime;
 
-        if (timer >= spawnInterval)
+        if (timer >= spawnInterval && spawnedEnemies.Count < maxEnemies)
         {
             SpawnEnemy();
             AudioController.Play(spawnSound, transform.position, 1);

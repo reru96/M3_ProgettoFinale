@@ -173,5 +173,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 0}
   weaponHolderName: WeaponSlot
-  pickupSound: {fileID: 0}
+  pickupSound: {fileID: 8300000, guid: 244f1375c3e44b745b8c61e8a4ed91e2, type: 3}
   destroyDelay: 0.1

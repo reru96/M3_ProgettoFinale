@@ -10,24 +10,24 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform player;
     [SerializeField] private Animator anim;
-
     public AudioClip hitSound;
-    public AudioClip deathSound;
-    //[SerializeField] private AudioSource audioSource;
+  
+    
 
     private LifeController life;
     private Rigidbody2D rb;
     private float x;
     private float y;
     private Vector2 dir;
+   
 
     // Start is called before the first frame update
     void Start()
-    {
+    {  
         rb = GetComponent<Rigidbody2D>();
         life = GetComponent<LifeController>();
         anim = GetComponent<Animator>();
-        //audioSource = GetComponent<AudioSource>();
+       
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -44,7 +44,10 @@ public class Enemy : MonoBehaviour
         {
             MoveTowardsPlayer();
             Animate();
+            
         }
+
+     
     }
 
     void MoveTowardsPlayer()
@@ -62,10 +65,7 @@ public class Enemy : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
            
-            GameObject playerObject = collision.collider.gameObject;
-
-          
-            LifeController lifeController = playerObject.GetComponent<LifeController>();
+            LifeController lifeController = collision.collider.GetComponent<LifeController>();
 
             if (lifeController != null)
             {
@@ -79,8 +79,7 @@ public class Enemy : MonoBehaviour
             Bullet bullet = collision.collider.GetComponent<Bullet>();
             if (bullet != null)
             {
-                //audioSource.pitch = UnityEngine.Random.Range(0.1f, 1.1f);
-                //audioSource.Play();
+                
                 AudioController.Play(hitSound, transform.position, 1);
                 life.AddHp(-bullet.Damage);
             }
@@ -107,7 +106,7 @@ public class Enemy : MonoBehaviour
         }
 
         anim.SetBool("isMoving", isMoving);
-
-        anim.SetBool("Die", dead);
+        
+        
     }
 }

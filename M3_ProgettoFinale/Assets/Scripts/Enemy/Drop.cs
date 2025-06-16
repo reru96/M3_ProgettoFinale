@@ -13,24 +13,21 @@ public class Drop : MonoBehaviour
 
     private void Start()
     {
-        life = GetComponent<LifeController>(); 
-        rb= GetComponent<Rigidbody2D>();
+        life = GetComponent<LifeController>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void Update()
     {
-        if ( collision.collider.CompareTag("Player"))
-        {
-            if (isQuitting || weaponDropPrefab == null) return;
 
-            OnDie();
-           
-            Destroy(gameObject);
-        }
+        if (isQuitting || weaponDropPrefab == null) return;
+
+        OnDie();
+
     }
     void OnApplicationQuit()
     {
-        isQuitting = true; 
+        isQuitting = true;
     }
 
     public void OnDie()

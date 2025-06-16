@@ -9,9 +9,10 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int damage = 1;
     [SerializeField] private Animation animClip;
 
+
     public int lifetime = 2;
     public AudioClip hitSound;
-   
+    public AudioClip ThrowSound;
 
     public int Damage => damage;
     public float Speed
@@ -31,6 +32,7 @@ public class Bullet : MonoBehaviour
     {
 
         _rb = GetComponent<Rigidbody2D>();
+        AudioController.Play(ThrowSound, transform.position, 0.10f);
         Destroy(gameObject, lifetime); 
     }
 
@@ -49,14 +51,15 @@ public class Bullet : MonoBehaviour
         {
 
             LifeController life = collision.collider.GetComponent<LifeController>();
-            AudioController.Play(hitSound, transform.position, 1);
+            AudioController.Play(hitSound, transform.position, 0.10f);
             life.AddHp(-damage);
             Destroy(gameObject);
         }
 
         if (!collision.collider.CompareTag("Enemy"))
         {
-           Destroy(gameObject);
+            AudioController.Play(hitSound, transform.position, 0.10f);
+            Destroy(gameObject);
         }
     }
 }

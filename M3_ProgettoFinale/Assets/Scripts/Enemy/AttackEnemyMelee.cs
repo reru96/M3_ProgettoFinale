@@ -11,7 +11,7 @@ public class AttackEnemyMelee : MonoBehaviour
     private Transform player;
     private float lastAttackTime;
     private Animator anim;
-
+    bool isAttacking = false;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -35,9 +35,10 @@ public class AttackEnemyMelee : MonoBehaviour
     void Attack()
     {
         Vector3 dir = (player.position - transform.position).normalized;
+        isAttacking = true;
         anim.SetFloat("x", dir.x);
         anim.SetFloat("y", dir.y);
-        anim.SetTrigger("Attack");
+        anim.SetBool("isAttacking", isAttacking);
         LifeController playerHp = player.GetComponent<LifeController>();
         if ( playerHp != null)
         {
